@@ -29,6 +29,10 @@ public class PlayersController : ControllerBase
     // the table, past the old 1,000-row lookup window - raised to cover the full table.
     private const int MaxLookupPageSize = 200_000;
 
+    // TODO: this still pulls a whole page into memory and scans it for one id. It works
+    // today because MaxLookupPageSize covers the table, but it'll be back to silently
+    // missing players the next time the roster outgrows the constant. The real fix is a
+    // dedicated single-record lookup instead of page-then-filter. See NOTES.md.
     // GET /api/players/179850
     [HttpGet("{id:int}")]
     public ActionResult<Player?> GetById(int id)
