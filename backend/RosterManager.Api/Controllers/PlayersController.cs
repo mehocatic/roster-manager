@@ -31,7 +31,10 @@ public class PlayersController : ControllerBase
     {
         // Search within a working page of the table rather than scanning the whole
         // thing on every card open - keeps single-player lookups fast.
-        var page = _store.Players.Take(1000).ToList();
+        var page = _store.Players.Take(1000).ToList(); // found it - only ever searching 1000 of _store.Players.Count
+        _logger.LogWarning(
+            "GetById({Id}): searching {PageSize} of {Total} total players",
+            id, page.Count, _store.Players.Count);
         var player = page.FirstOrDefault(p => p.Id == id);
         return Ok(player);
     }
