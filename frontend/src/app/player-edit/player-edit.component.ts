@@ -27,7 +27,9 @@ export class PlayerEditComponent implements OnChanges {
 
   private loadPlayer(id: number): void {
     this.player = null;
+    console.log('[player-edit] requesting player for edit, id =', id);
     this.playerService.getPlayerById(id).subscribe(result => {
+      console.log('[player-edit] API response for id =', id, '->', result);
       this.player = result ?? { id, name: '', teamId: 0, position: '', number: 0 };
     });
   }
