@@ -1,0 +1,22 @@
+<div class="edit-card" *ngIf="player as p">
+  <h2>Edit Player Card</h2>
+
+  <label>
+    Name
+    <input type="text" [(ngModel)]="p.name" name="name" />
+  </label>
+
+  <label>
+    Number
+    <input type="number" [(ngModel)]="p.number" name="number" />
+  </label>
+
+  <label>
+    Position
+    <input type="text" [(ngModel)]="p.position" name="position" />
+  </label>
+
+  <div class="actions">
+    <button (click)="close()">Close</button>
+  </div>
+</div>

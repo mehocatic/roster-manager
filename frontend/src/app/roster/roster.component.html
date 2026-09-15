@@ -1,0 +1,30 @@
+<div class="page">
+  <h1>{{ teamName }} &mdash; Roster</h1>
+
+  <table class="roster-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Position</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of roster">
+        <td>{{ player.number }}</td>
+        <td>{{ player.name }}</td>
+        <td>{{ player.position }}</td>
+        <td>
+          <button (click)="openEditCard(player.id)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-player-edit
+    *ngIf="selectedPlayerId !== null"
+    [playerId]="selectedPlayerId"
+    (closed)="closeEditCard()">
+  </app-player-edit>
+</div>
