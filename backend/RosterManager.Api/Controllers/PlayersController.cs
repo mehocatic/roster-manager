@@ -25,16 +25,15 @@ public class PlayersController : ControllerBase
         return Ok(roster);
     }
 
+    // Players added after the original roster table was seeded ended up further down
+    // the table, past the old 1,000-row lookup window - raised to cover the full table.
+    private const int MaxLookupPageSize = 200_000;
+
     // GET /api/players/179850
     [HttpGet("{id:int}")]
     public ActionResult<Player?> GetById(int id)
     {
-        // Search within a working page of the table rather than scanning the whole
-        // thing on every card open - keeps single-player lookups fast.
-        var page = _store.Players.Take(1000).ToList(); // found it - only ever searching 1000 of _store.Players.Count
-        _logger.LogWarning(
-            "GetById({Id}): searching {PageSize} of {Total} total players",
-            id, page.Count, _store.Players.Count);
+        var page = _store.Players.Take(MaxLookupPageSize).ToList();
         var player = page.FirstOrDefault(p => p.Id == id);
         return Ok(player);
     }
